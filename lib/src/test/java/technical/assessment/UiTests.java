@@ -12,7 +12,7 @@ import technical.assessment.pages.LaptopPage;
 import technical.assessment.pages.SearchResults;
 import utils.CommonUtils;
 
-public class Tests extends BaseConfig {
+public class UiTests extends BaseConfig {
     HomePage homePageObj;
     LaptopPage laptopPageObj;
     DressesPage dressesPageObj;
