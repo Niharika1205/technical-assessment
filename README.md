@@ -5,7 +5,7 @@ Test File Path: /lib/src/test/java/technical/assessment/UiTests.java
 Task 2: API Tests
 Test File Path: /lib/src/test/java/technical/assessment/ApiTests.java
 
-Tast 3: DatabaseQuerying
+Task 3: DatabaseQuerying
 Test File Path: /lib/src/test/java/technical/assessment/DatabaseQueries.txt
 
 Tech Stack:
