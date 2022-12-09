@@ -33,6 +33,11 @@ public class BaseConfig {
         driver.quit();
     }
 
+    /**
+     * setup browser, driver and launch url
+     * @param browser
+     * @param url
+     */
     public void browserSettings(final String browser, final String url) {
         try {
 

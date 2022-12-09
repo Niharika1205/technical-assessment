@@ -23,16 +23,17 @@ public class SearchResults {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * Verify if results are displayed based on search text or not
+     * @param deviceName
+     * @return true if expected results are displayed
+     */
     public Boolean verifySearchResults(String deviceName){
-        Boolean isSearchValid = false;
         for(int i=0; i< productName.size(); i++){
-            if(productName.get(i).getText().contains(deviceName)){
-                isSearchValid = true;
-            } else {
-                isSearchValid = false;
-                break;
+            if(!(productName.get(i).getText().contains(deviceName))){
+                return false;
             }
         }
-        return isSearchValid;
+        return true;
     }
 }

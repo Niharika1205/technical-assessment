@@ -21,6 +21,10 @@ public class ApiTests {
         RestAssured.baseURI = "https://restful-booker.herokuapp.com/booking";
     }
 
+    /**
+     * Method to validate positive flow for creating a booking.
+     * Validate success status code and Booking ID not null.
+     */
     @Test
     public void validateBookingRequest() {
 
@@ -36,6 +40,9 @@ public class ApiTests {
 
     }
 
+    /**
+     * Method to validate 500 status code if payload field format is incorrect.
+     */
     @Test(description = "wrongly spelled checkin field name to get error")
     public void validateInvalidFieldError() {
         RequestSpecification request = RestAssured.given().log().all();
@@ -46,7 +53,10 @@ public class ApiTests {
         response.then().assertThat().statusCode(500);
     }
 
-    @Test(description = "Passed null value for String lastname")
+    /**
+     * Method to validate 500 error code if null value is passed for String lastname.
+     */
+    @Test
     public void validateNullStringError() {
 
         RequestSpecification request = RestAssured.given().log().all();

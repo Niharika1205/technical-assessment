@@ -42,6 +42,17 @@ public class BookingBuilder {
         private String checkout;
     }
 
+    /**
+     * Method to create request body for Create booking request
+     * @param checkIn
+     * @param checkout
+     * @param firstName
+     * @param lastName
+     * @param totalPrice
+     * @param depositPaid
+     * @param addNeeds
+     * @return request payload
+     */
     public CreateBooking createBookingRequest(String checkIn, String checkout, String firstName, String lastName,
                                               int totalPrice, boolean depositPaid, String addNeeds){
         BookingDates bookingDates = BookingDates.builder().checkIn(checkIn).checkout(checkout).build();
@@ -52,6 +63,17 @@ public class BookingBuilder {
         return bookingRequest;
     }
 
+    /**
+     * Method to create invalid request body for Create booking request
+     * @param checkIn
+     * @param checkout
+     * @param firstName
+     * @param lastName
+     * @param totalPrice
+     * @param depositPaid
+     * @param addNeeds
+     * @return invalid request payload
+     */
     public CreateBookingInvalid createBookingRequestInvalid(int checkIn, String checkout, String firstName, String lastName,
                                               int totalPrice, boolean depositPaid, String addNeeds){
         BookingDatesInvalid bookingDates = BookingDatesInvalid.builder().checkIn(checkIn).checkout(checkout).build();

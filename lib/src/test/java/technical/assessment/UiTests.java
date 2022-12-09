@@ -29,6 +29,9 @@ public class UiTests extends BaseConfig {
                 "Home Page not loaded");
     }
 
+    /**
+     * Test method to validate that the results returned from page matches the selected brand.
+     */
     @Test
     public void applyFilterTest() {
 
@@ -40,16 +43,22 @@ public class UiTests extends BaseConfig {
 
     }
 
+    /**
+     * Test method to validate that the results are sorted in descending order of Price.
+     */
     @Test
     public void sortResultsTest() {
         dressesPageObj = homePageObj.goToDressesPage();
         Assert.assertTrue(CommonUtils.isPageValid(dressesPageObj.pageHeader,"Dresses Price List in Malaysia"),
                 "Dresses page is not loaded");
         Assert.assertTrue(dressesPageObj.isResultSorted());
-        Assert.assertTrue(dressesPageObj.verifySortedResult(),
+            Assert.assertTrue(dressesPageObj.verifySortedResult(),
                 "Results are not sorted in descending order of Price");
     }
 
+    /**
+     * Test method to validate that the search results returned matches the search criteria.
+     */
     @Test
     public void searchDeviceTest() {
         String product = "iPhone 14";

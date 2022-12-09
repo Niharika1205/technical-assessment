@@ -30,6 +30,10 @@ public class LaptopPage {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     *Method to apply filter based on brand name
+     * @param brand
+     */
     public void filterByBrand(String brand) {
         spriteIcon.click();
         for (int i = 0; i < brands.size(); i++) {
@@ -37,13 +41,19 @@ public class LaptopPage {
             String brandName = brandValue.getText();
             if (brandName.equals(brand)) {
                 brandValue.click();
-                CommonUtils.explicitWait(driver).until(ExpectedConditions.titleContains("Compare Latest Dell Laptops Price in Malaysia"));
+                CommonUtils.explicitWait(driver).until(ExpectedConditions.
+                        titleContains("Compare Latest Dell Laptops Price in Malaysia"));
                 break;
             }
         }
 
     }
 
+    /**
+     * Verify if filter got applied or not
+     * @param brandName
+     * @return true if filter is applied
+     */
     public Boolean isFilterApplied(String brandName) {
         for (int i = 0; i < productName.size(); i++) {
             if (productName.get(i).getText().contains(brandName)) {

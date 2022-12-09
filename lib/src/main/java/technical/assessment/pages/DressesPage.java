@@ -28,6 +28,10 @@ public class DressesPage {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * Method to verify if results are sorted in descending order
+     * @return boolean value if sorted
+     */
     public Boolean isResultSorted() {
 
         CommonUtils.clickOnElement(sortIcon);
@@ -41,14 +45,23 @@ public class DressesPage {
         return false;
     }
 
-    public long getPriceValue(int index) {
+    /**
+     * Method to extract price of dresses
+     * @param index of product in list
+     * @return price in long format
+     */
+    public double getPriceValue(int index) {
         String price = priceList.get(index).getText();
-        price = price.substring(3, price.length() - 3).replace(",", "");
-        return Long.parseLong(price);
+        price = price.substring(3, price.length()).replace(",", "");
+        return Double.parseDouble(price);
     }
 
+    /**
+     * Verify if results are sorted based on price value
+     * @return true if sorted in descending
+     */
     public Boolean verifySortedResult() {
-        for (int i = 0; i < priceList.size(); i++) {
+        for (int i = 0; i < priceList.size()-1; i++) {
             if (getPriceValue(i) < getPriceValue(i + 1)) {
                 return false;
             }

@@ -10,13 +10,13 @@ import utils.CommonUtils;
 public class HomePage extends BaseConfig {
 
     private WebDriver driver;
-    @FindBy(xpath = "//div[contains(text(),'Largest Price Comparison Site')]")
+    @FindBy(xpath = "//a[@title='iPrice Mascot Malaysia']/../div/div[2]")
     private WebElement pageTitle;
 
     @FindBy(xpath = "//a[@href='computing/laptops/']")
     private WebElement laptopLink;
 
-    @FindBy(xpath = "//div/input[@id='see-more-PLP-FA-Category-Carousel']//..//div//span[text()='See More ˅']")
+    @FindBy(xpath = "//input[@id='see-more-PLP-FA-Category-Carousel']/../div/label/span[contains(text(),'See')]")
     private WebElement seeMoreLink;
 
     @FindBy(xpath = "//a[@href='clothing/dresses/']")
@@ -33,16 +33,28 @@ public class HomePage extends BaseConfig {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * Method to get page header text
+     * @return homepage header text
+     */
     public String getPageTitle() {
         return this.pageTitle.getText();
     }
 
+    /**
+     * Redirect to computing laptops page
+     * @return object of laptop page
+     */
     public LaptopPage goToLaptopsPage() {
         CommonUtils.scrollIntoView(driver, laptopLink);
         CommonUtils.clickOnElement(laptopLink);
         return new LaptopPage(this.driver);
     }
 
+    /**
+     * Redirect to clothing dresses page
+     * @return object of dresses page
+     */
     public DressesPage goToDressesPage() {
         CommonUtils.scrollIntoView(driver, seeMoreLink);
         CommonUtils.clickOnElement(seeMoreLink);
@@ -51,6 +63,11 @@ public class HomePage extends BaseConfig {
         return new DressesPage(this.driver);
     }
 
+    /**
+     * Enter search text in input box and click on search button
+     * @param deviceName
+     * @return object of search results page
+     */
     public SearchResults searchForDevice(String deviceName){
         searchInput.click();
         searchInput.sendKeys(deviceName);
