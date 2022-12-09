@@ -12,8 +12,12 @@ import technical.assessment.requestBuilder.BookingBuilder;
 
 public class ApiTests {
     BookingBuilder bookingBuilderObj = new BookingBuilder();
+    Header contentType = new Header("Content-Type", "application/json");
+    Header accept = new Header("Accept", "application/json");
+    Headers headers = new Headers(contentType, accept);
+
     @BeforeTest
-    public void setup(){
+    public void setup() {
         RestAssured.baseURI = "https://restful-booker.herokuapp.com/booking";
     }
 
@@ -21,10 +25,6 @@ public class ApiTests {
     public void validateBookingRequest() {
 
         RequestSpecification request = RestAssured.given().log().all();
-        Header contentType = new Header("Content-Type", "application/json");
-        Header accept = new Header("Accept", "application/json");
-        Headers headers = new Headers(contentType, accept);
-
         BookingBuilder.CreateBooking reqBody = bookingBuilderObj.createBookingRequest
                 ("2018-01-01", "2019-01-01", "Jim", "Brown", 111,
                         true, "Breakfast");
@@ -37,12 +37,8 @@ public class ApiTests {
     }
 
     @Test(description = "wrongly spelled checkin field name to get error")
-    public void validateInvalidFieldError(){
+    public void validateInvalidFieldError() {
         RequestSpecification request = RestAssured.given().log().all();
-        Header contentType = new Header("Content-Type", "application/json");
-        Header accept = new Header("Accept", "application/json");
-        Headers headers = new Headers(contentType, accept);
-
         BookingBuilder.CreateBookingInvalid reqBody = bookingBuilderObj.createBookingRequestInvalid
                 (0, "", "", "", 111, true, "");
 
@@ -54,10 +50,6 @@ public class ApiTests {
     public void validateNullStringError() {
 
         RequestSpecification request = RestAssured.given().log().all();
-        Header contentType = new Header("Content-Type", "application/json");
-        Header accept = new Header("Accept", "application/json");
-        Headers headers = new Headers(contentType, accept);
-
         BookingBuilder.CreateBooking reqBody = bookingBuilderObj.createBookingRequest
                 ("2018-01-01", "2019-01-01", "Jim", null, 111,
                         true, "Breakfast");
