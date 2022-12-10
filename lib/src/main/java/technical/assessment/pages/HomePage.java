@@ -1,10 +1,13 @@
 package technical.assessment.pages;
 
 import config.BaseConfig;
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Reporter;
 import utils.CommonUtils;
 
 public class HomePage extends BaseConfig {
@@ -69,9 +72,16 @@ public class HomePage extends BaseConfig {
      * @return object of search results page
      */
     public SearchResults searchForDevice(String deviceName){
-        searchInput.click();
-        searchInput.sendKeys(deviceName);
-        searchButton.click();
+        try{
+            searchInput.click();
+            searchInput.sendKeys(deviceName);
+            searchButton.click();
+        }catch(ElementClickInterceptedException e){
+            Reporter.log("Search element not clickable on home page " + e);
+        }catch(NoSuchElementException e){
+            Reporter.log("Search element not found " + e);
+        }
+
         return new SearchResults(this.driver);
     }
 

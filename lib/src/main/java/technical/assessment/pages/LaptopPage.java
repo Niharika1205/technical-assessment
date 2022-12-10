@@ -1,12 +1,16 @@
 package technical.assessment.pages;
 
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Reporter;
 import utils.CommonUtils;
+import utils.Constants;
 
 import java.util.List;
 
@@ -31,35 +35,49 @@ public class LaptopPage {
     }
 
     /**
-     *Method to apply filter based on brand name
+     * Method to apply filter based on brand name.
+     *
      * @param brand
      */
     public void filterByBrand(String brand) {
-        spriteIcon.click();
-        for (int i = 0; i < brands.size(); i++) {
-            WebElement brandValue = brands.get(i);
-            String brandName = brandValue.getText();
-            if (brandName.equals(brand)) {
-                brandValue.click();
-                CommonUtils.explicitWait(driver).until(ExpectedConditions.
-                        titleContains("Compare Latest Dell Laptops Price in Malaysia"));
-                break;
+        try {
+            spriteIcon.click();
+            for (int i = 0; i < brands.size(); i++) {
+                WebElement brandValue = brands.get(i);
+                String brandName = brandValue.getText();
+                if (brandName.equals(brand)) {
+                    brandValue.click();
+                    CommonUtils.explicitWait(driver).until(ExpectedConditions.
+                            titleContains(Constants.laptopTitle));
+                    break;
+                }
             }
+        } catch (NoSuchElementException e) {
+            Reporter.log("Brand not Found" + e);
+        } catch (IndexOutOfBoundsException e) {
+            Reporter.log("Product list length exceeded for Laptop Page " + e);
+        } catch(TimeoutException e){
+            Reporter.log("Timeout occurred while waiting for laptop page to load " + e);
         }
-
     }
 
     /**
-     * Verify if filter got applied or not
+     * Verify if filter got applied or not.
+     *
      * @param brandName
      * @return true if filter is applied
      */
     public Boolean isFilterApplied(String brandName) {
-        for (int i = 0; i < productName.size(); i++) {
-            if (productName.get(i).getText().contains(brandName)) {
-                return true;
+        try {
+            for (int i = 0; i < productName.size(); i++) {
+                if (productName.get(i).getText().contains(brandName)) {
+                    return true;
+                }
             }
-
+        } catch (IndexOutOfBoundsException e) {
+            Reporter.log("Product list length exceeded for filter results " + e);
+        } catch (NoSuchElementException e) {
+            Reporter.log("Element not found for filters " + e);
         }
         return false;
     }

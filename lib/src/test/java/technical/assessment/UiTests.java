@@ -11,6 +11,7 @@ import technical.assessment.pages.HomePage;
 import technical.assessment.pages.LaptopPage;
 import technical.assessment.pages.SearchResults;
 import utils.CommonUtils;
+import utils.Constants;
 
 public class UiTests extends BaseConfig {
     HomePage homePageObj;
@@ -25,8 +26,7 @@ public class UiTests extends BaseConfig {
         browserSettings("Chrome", getBaseURL());
         this.driver = getWebDriver();
         homePageObj = new HomePage(driver);
-        Assert.assertEquals(homePageObj.getPageTitle(), "Malaysia's Largest Price Comparison Site",
-                "Home Page not loaded");
+        Assert.assertEquals(homePageObj.getPageTitle(), Constants.expectedHomePageTitle, Constants.homeErrorMessage);
     }
 
     /**
@@ -36,10 +36,10 @@ public class UiTests extends BaseConfig {
     public void applyFilterTest() {
 
         laptopPageObj = homePageObj.goToLaptopsPage();
-        Assert.assertTrue(CommonUtils.isPageValid(laptopPageObj.pageHeader, "Latest Laptops in Malaysia Price List"),
-                "Laptops page not loaded");
-        laptopPageObj.filterByBrand("Dell");
-        Assert.assertTrue(laptopPageObj.isFilterApplied("Dell"), "Filter is not working");
+        Assert.assertTrue(CommonUtils.isPageValid(laptopPageObj.pageHeader, Constants.expectedLaptopPageTitle),
+                Constants.laptopErrorMessage);
+        laptopPageObj.filterByBrand(Constants.deviceName);
+        Assert.assertTrue(laptopPageObj.isFilterApplied(Constants.deviceName), Constants.filterErrorMessage);
 
     }
 
@@ -49,11 +49,10 @@ public class UiTests extends BaseConfig {
     @Test
     public void sortResultsTest() {
         dressesPageObj = homePageObj.goToDressesPage();
-        Assert.assertTrue(CommonUtils.isPageValid(dressesPageObj.pageHeader,"Dresses Price List in Malaysia"),
-                "Dresses page is not loaded");
+        Assert.assertTrue(CommonUtils.isPageValid(dressesPageObj.pageHeader, Constants.expectedDressesPageTitle),
+                Constants.dressesErrorMessage);
         Assert.assertTrue(dressesPageObj.isResultSorted());
-            Assert.assertTrue(dressesPageObj.verifySortedResult(),
-                "Results are not sorted in descending order of Price");
+            Assert.assertTrue(dressesPageObj.verifySortedResult(), Constants.sortErrorMessage);
     }
 
     /**
@@ -61,11 +60,12 @@ public class UiTests extends BaseConfig {
      */
     @Test
     public void searchDeviceTest() {
-        String product = "iPhone 14";
-        searchResultsObj = homePageObj.searchForDevice(product);
-        Assert.assertTrue(CommonUtils.isPageValid(searchResultsObj.pageHeader,product),"Search Results not loaded");
-        Boolean isSearchValid = searchResultsObj.verifySearchResults(product);
-        Assert.assertTrue(isSearchValid, "Search results are not valid");
+
+        searchResultsObj = homePageObj.searchForDevice(Constants.searchProduct);
+        Assert.assertTrue(CommonUtils.isPageValid(searchResultsObj.pageHeader,Constants.searchProduct),
+                Constants.searchErrorMessage);
+        Boolean isSearchValid = searchResultsObj.verifySearchResults(Constants.searchProduct);
+        Assert.assertTrue(isSearchValid, Constants.invalidSearchError);
     }
 
     @AfterMethod

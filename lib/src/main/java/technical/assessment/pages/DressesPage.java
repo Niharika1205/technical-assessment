@@ -1,11 +1,13 @@
 package technical.assessment.pages;
 
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Reporter;
 import utils.CommonUtils;
 
 import java.util.List;
@@ -33,14 +35,17 @@ public class DressesPage {
      * @return boolean value if sorted
      */
     public Boolean isResultSorted() {
+        try{
+            CommonUtils.clickOnElement(sortIcon);
+            CommonUtils.explicitWait(driver).until(ExpectedConditions.attributeContains(sortIcon, "class", "ascending"));
+            CommonUtils.clickOnElement(sortIcon);
+            CommonUtils.explicitWait(driver).until(ExpectedConditions.attributeContains(sortIcon, "class", "descending"));
 
-        CommonUtils.clickOnElement(sortIcon);
-        CommonUtils.explicitWait(driver).until(ExpectedConditions.attributeContains(sortIcon, "class", "ascending"));
-        CommonUtils.clickOnElement(sortIcon);
-        CommonUtils.explicitWait(driver).until(ExpectedConditions.attributeContains(sortIcon, "class", "descending"));
-
-        if (sortIcon.getAttribute("class").contains("i-descending-green-active")) {
-            return true;
+            if (sortIcon.getAttribute("class").contains("i-descending-green-active")) {
+                return true;
+            }
+        } catch(TimeoutException e){
+            Reporter.log("Timeout occurred while sorting elements " + e);
         }
         return false;
     }
@@ -51,9 +56,15 @@ public class DressesPage {
      * @return price in long format
      */
     public double getPriceValue(int index) {
-        String price = priceList.get(index).getText();
-        price = price.substring(3, price.length()).replace(",", "");
-        return Double.parseDouble(price);
+        Double doublePrice = 0.00;
+        try{
+            String price = priceList.get(index).getText();
+            price = price.substring(3, price.length()).replace(",", "");
+             doublePrice = Double.parseDouble(price);
+        } catch(IndexOutOfBoundsException e){
+            Reporter.log("Price list length exceeded on dresses page "+e);
+        }
+        return doublePrice;
     }
 
     /**
@@ -61,10 +72,14 @@ public class DressesPage {
      * @return true if sorted in descending
      */
     public Boolean verifySortedResult() {
-        for (int i = 0; i < priceList.size()-1; i++) {
-            if (getPriceValue(i) < getPriceValue(i + 1)) {
-                return false;
+        try{
+            for (int i = 0; i < priceList.size()-1; i++) {
+                if (getPriceValue(i) < getPriceValue(i + 1)) {
+                    return false;
+                }
             }
+        }catch(ArrayIndexOutOfBoundsException e){
+            Reporter.log("Array Length exceeded on dresses page "+e);
         }
         return true;
 

@@ -4,13 +4,15 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Reporter;
+import utils.Constants;
 
 import java.time.Duration;
 
 public class BaseConfig {
 
     private WebDriver driver;
-    private String baseURL="https://iprice.my/";
+    private String baseURL = Constants.baseURL;
 
     public void setWebDriver(WebDriver driver) {
         this.driver = driver;
@@ -20,9 +22,6 @@ public class BaseConfig {
         return baseURL;
     }
 
-    public void setBaseURL(String baseURL) {
-        this.baseURL = baseURL;
-    }
     public void openURL(final String url)
     {
         getWebDriver().get(url);
@@ -57,7 +56,7 @@ public class BaseConfig {
             openURL(url);
 
         } catch (IllegalStateException e) {
-            System.out.println("Exception Occurred " + e);
+            Reporter.log("Exception Occurred while setting up browser " + e);
         }
     }
     public WebDriver getWebDriver()

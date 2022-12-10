@@ -4,13 +4,13 @@
 
 **Test File Path**: /lib/src/test/java/technical/assessment/UiTests.java
 
-###### _Task 2: API Tests_
+###### Task 2: API Tests
 
 **Test File Path**: /lib/src/test/java/technical/assessment/ApiTests.java
 
 ###### _**Task 3: DatabaseQuerying**_
 
-**Test File Path**: /lib/src/test/java/technical/assessment/DatabaseQueries.txt
+**Test File Path**: /lib/src/test/java/technical/assessment/DatabaseQueries.sql
 
 ###### _Tech Stack:_
 * Selenium
@@ -22,4 +22,4 @@
 ###### **Note**: 
 Designed framework with minimal set of features which are required to run the tests.
 
-Framework can be enhanced with data providers and test suites using testng xml as well as reporters and loggers.
+Framework can be enhanced with test suites using testng xml as well as reporting and logging.

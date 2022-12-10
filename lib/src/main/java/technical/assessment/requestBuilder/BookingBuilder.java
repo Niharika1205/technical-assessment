@@ -3,6 +3,7 @@ package technical.assessment.requestBuilder;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
+import utils.TestDataProvider;
 
 public class BookingBuilder {
 
@@ -38,48 +39,35 @@ public class BookingBuilder {
     @Data
     @Builder
     public static class BookingDatesInvalid {
-        private int checkIn;
+        private String checkIn;
         private String checkout;
     }
 
     /**
      * Method to create request body for Create booking request
-     * @param checkIn
-     * @param checkout
-     * @param firstName
-     * @param lastName
-     * @param totalPrice
-     * @param depositPaid
-     * @param addNeeds
-     * @return request payload
+     * @param bookParam
+     * @return booking request payload
      */
-    public CreateBooking createBookingRequest(String checkIn, String checkout, String firstName, String lastName,
-                                              int totalPrice, boolean depositPaid, String addNeeds){
-        BookingDates bookingDates = BookingDates.builder().checkIn(checkIn).checkout(checkout).build();
-        CreateBooking bookingRequest = CreateBooking.builder().firstname(firstName).lastname(lastName)
-                .totalprice(totalPrice).depositpaid(depositPaid).bookingdates(bookingDates)
-                .additionalneeds(addNeeds).build();
+    public CreateBooking createBookingRequest(TestDataProvider.BookingParams bookParam){
+        BookingDates bookingDates = BookingDates.builder().checkIn(bookParam.getCheckIn()).checkout(bookParam.getCheckout()).build();
+        CreateBooking bookingRequest = CreateBooking.builder().firstname(bookParam.getFirstname()).lastname(bookParam.getLastname())
+                .totalprice(bookParam.getTotalPrice()).depositpaid(bookParam.getDepositPaid()).bookingdates(bookingDates)
+                .additionalneeds(bookParam.getAddNotes()).build();
 
         return bookingRequest;
     }
 
     /**
      * Method to create invalid request body for Create booking request
-     * @param checkIn
-     * @param checkout
-     * @param firstName
-     * @param lastName
-     * @param totalPrice
-     * @param depositPaid
-     * @param addNeeds
-     * @return invalid request payload
+     * @param bookingParams
+     * @return invalid booking request payload
      */
-    public CreateBookingInvalid createBookingRequestInvalid(int checkIn, String checkout, String firstName, String lastName,
-                                              int totalPrice, boolean depositPaid, String addNeeds){
-        BookingDatesInvalid bookingDates = BookingDatesInvalid.builder().checkIn(checkIn).checkout(checkout).build();
-        CreateBookingInvalid bookingRequest = CreateBookingInvalid.builder().firstname(firstName).lastname(lastName)
-                .totalprice(totalPrice).depositpaid(depositPaid).bookingdates(bookingDates)
-                .additionalneeds(addNeeds).build();
+    public CreateBookingInvalid createBookingRequestInvalid(TestDataProvider.BookingParams bookingParams){
+        BookingDatesInvalid bookingDates = BookingDatesInvalid.builder().checkIn(bookingParams.getCheckIn())
+                .checkout(bookingParams.getCheckout()).build();
+        CreateBookingInvalid bookingRequest = CreateBookingInvalid.builder().firstname(bookingParams.getFirstname())
+                .lastname(bookingParams.getLastname()).totalprice(bookingParams.getTotalPrice()).depositpaid(bookingParams
+                        .getDepositPaid()).bookingdates(bookingDates).additionalneeds(bookingParams.getAddNotes()).build();
 
         return bookingRequest;
     }
